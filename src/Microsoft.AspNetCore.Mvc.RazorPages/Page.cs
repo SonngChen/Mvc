@@ -1162,7 +1162,7 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages
         #endregion Factory methods
 
         /// <summary>
-        /// Updates the specified <paramref name="model"/> instance using values from the controller's current
+        /// Updates the specified <paramref name="model"/> instance using values from the <see cref="Page"/>'s current
         /// <see cref="IValueProvider"/>.
         /// </summary>
         /// <typeparam name="TModel">The type of the model object.</typeparam>
@@ -1181,7 +1181,7 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages
         }
 
         /// <summary>
-        /// Updates the specified <paramref name="model"/> instance using values from the controller's current
+        /// Updates the specified <paramref name="model"/> instance using values from the <see cref="Page"/>'s current
         /// <see cref="IValueProvider"/> and a <paramref name="prefix"/>.
         /// </summary>
         /// <typeparam name="TModel">The type of the model object.</typeparam>
@@ -1249,7 +1249,7 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages
         }
 
         /// <summary>
-        /// Updates the specified <paramref name="model"/> instance using values from the controller's current
+        /// Updates the specified <paramref name="model"/> instance using values from the <see cref="Page"/>'s current
         /// <see cref="IValueProvider"/> and a <paramref name="prefix"/>.
         /// </summary>
         /// <typeparam name="TModel">The type of the model object.</typeparam>
@@ -1288,7 +1288,7 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages
         }
 
         /// <summary>
-        /// Updates the specified <paramref name="model"/> instance using values from the controller's current
+        /// Updates the specified <paramref name="model"/> instance using values from the <see cref="Page"/>'s current
         /// <see cref="IValueProvider"/> and a <paramref name="prefix"/>.
         /// </summary>
         /// <typeparam name="TModel">The type of the model object.</typeparam>
@@ -1415,7 +1415,7 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages
         }
 
         /// <summary>
-        /// Updates the specified <paramref name="model"/> instance using values from the controller's current
+        /// Updates the specified <paramref name="model"/> instance using values from the <see cref="Page"/>'s current
         /// <see cref="IValueProvider"/> and a <paramref name="prefix"/>.
         /// </summary>
         /// <param name="model">The model instance to update.</param>

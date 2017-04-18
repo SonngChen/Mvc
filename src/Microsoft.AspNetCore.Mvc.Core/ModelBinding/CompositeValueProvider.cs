@@ -75,7 +75,6 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
             }
 
             var mvcOptions = actionContext.HttpContext.RequestServices.GetRequiredService<IOptions<MvcOptions>>();
-
             var factories = mvcOptions.Value.ValueProviderFactories;
 
             return await CreateAsync(actionContext, factories);
