@@ -80,7 +80,17 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
             return await CreateAsync(actionContext, factories);
         }
 
-        private static async Task<CompositeValueProvider> CreateAsync(
+        /// <summary>
+        /// Asynchronously creates a <see cref="CompositeValueProvider"/> using the provided
+        /// <paramref name="actionContext"/>.
+        /// </summary>
+        /// <param name="actionContext">The <see cref="ActionContext"/> associated with the current request.</param>
+        /// <param name="factories">The <see cref="IValueProviderFactory"/> to be applied to the context.</param>
+        /// <returns>
+        /// A <see cref="Task{TResult}"/> which, when completed, asynchronously returns a
+        /// <see cref="CompositeValueProvider"/>.
+        /// </returns>
+        public static async Task<CompositeValueProvider> CreateAsync(
             ActionContext actionContext,
             IList<IValueProviderFactory> factories)
         {

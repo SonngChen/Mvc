@@ -1,0 +1,28 @@
+﻿@page "{id:int}"
+@using RazorPagesWebSite
+
+@functions
+{
+    [ModelBinder]
+    public UserModel UserModel { get; set; }
+
+    [FromRoute]
+    public int Id { get; set; }
+
+    public async Task OnPost(UserModel user)
+    {
+
+        Updated = await this.TryUpdateModelAsync(user);
+
+        UserModel = user;
+    }
+
+    public bool Updated { get; set; }
+}
+
+@Html.ValidationSummary()
+<form action="">
+    @Html.AntiForgeryToken()    
+</form>
+Updated: @Updated
+Name = @UserModel.Name

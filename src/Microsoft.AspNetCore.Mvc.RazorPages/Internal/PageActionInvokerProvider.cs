@@ -174,6 +174,7 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages.Internal
 
             var pageFactory = _pageFactoryProvider.CreatePageFactory(compiledActionDescriptor);
             var pageDisposer = _pageFactoryProvider.CreatePageDisposer(compiledActionDescriptor);
+
             var propertyBinder = PagePropertyBinderFactory.CreateBinder(
                 _parameterBinder,
                 _modelMetadataProvider,
