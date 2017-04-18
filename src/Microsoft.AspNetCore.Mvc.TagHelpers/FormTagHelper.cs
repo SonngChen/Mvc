@@ -13,14 +13,7 @@ namespace Microsoft.AspNetCore.Mvc.TagHelpers
     /// <summary>
     /// <see cref="ITagHelper"/> implementation targeting &lt;form&gt; elements.
     /// </summary>
-    [HtmlTargetElement("form", Attributes = ActionAttributeName)]
-    [HtmlTargetElement("form", Attributes = AntiforgeryAttributeName)]
-    [HtmlTargetElement("form", Attributes = AreaAttributeName)]
-    [HtmlTargetElement("form", Attributes = FragmentAttributeName)]
-    [HtmlTargetElement("form", Attributes = ControllerAttributeName)]
-    [HtmlTargetElement("form", Attributes = RouteAttributeName)]
-    [HtmlTargetElement("form", Attributes = RouteValuesDictionaryName)]
-    [HtmlTargetElement("form", Attributes = RouteValuesPrefix + "*")]
+    [HtmlTargetElement("form")]
     public class FormTagHelper : TagHelper
     {
         private const string ActionAttributeName = "asp-action";
@@ -201,8 +194,12 @@ namespace Microsoft.AspNetCore.Mvc.TagHelpers
                     routeValues["area"] = Area;
                 }
 
-                TagBuilder tagBuilder;
-                if (Route == null)
+                TagBuilder tagBuilder = null;
+                if (Action == null && Controller == null && Route == null && _routeValues == null && Fragment == null && Area == null)
+                {
+                    // Empty form tag such as <form></form>. Let it flow to the output as-is and only handle anti-forgery.
+                }
+                else if (Route == null)
                 {
                     tagBuilder = Generator.GenerateForm(
                         ViewContext,
