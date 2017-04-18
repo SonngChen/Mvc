@@ -5,6 +5,8 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Internal;
 
 namespace Microsoft.AspNetCore.Mvc.RazorPages.Internal
@@ -33,8 +35,10 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages.Internal
                 var arguments = new object[handler.Parameters.Length];
                 for (var i = 0; i < handler.Parameters.Length; i++)
                 {
+                    // TODO: This should be cached?
+                    var binder = page.PageContext.HttpContext.RequestServices.GetRequiredService<PageArgumentBinder>();
                     var parameter = handler.Parameters[i];
-                    arguments[i] = await page.Binder.BindModelAsync(
+                    arguments[i] = await binder.BindModelAsync(
                         page.PageContext,
                         parameter.Type,
                         parameter.DefaultValue,

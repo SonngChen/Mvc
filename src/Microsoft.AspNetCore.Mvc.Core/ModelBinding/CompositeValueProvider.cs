@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.AspNetCore.Mvc.ModelBinding
 {
@@ -52,7 +54,39 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding
             }
 
             var factories = controllerContext.ValueProviderFactories;
-            var valueProviderFactoryContext = new ValueProviderFactoryContext(controllerContext);
+
+            return await CreateAsync(controllerContext, factories);
+        }
+
+        /// <summary>
+        /// Asynchronously creates a <see cref="CompositeValueProvider"/> using the provided
+        /// <paramref name="actionContext"/>.
+        /// </summary>
+        /// <param name="actionContext">The <see cref="ActionContext"/> associated with the current request.</param>
+        /// <returns>
+        /// A <see cref="Task{TResult}"/> which, when completed, asynchronously returns a
+        /// <see cref="CompositeValueProvider"/>.
+        /// </returns>
+        public static async Task<CompositeValueProvider> CreateAsync(ActionContext actionContext)
+        {
+            if (actionContext == null)
+            {
+                throw new ArgumentNullException(nameof(actionContext));
+            }
+
+            var mvcOptions = actionContext.HttpContext.RequestServices.GetRequiredService<IOptions<MvcOptions>>();
+
+            var factories = mvcOptions.Value.ValueProviderFactories;
+
+            return await CreateAsync(actionContext, factories);
+        }
+
+        private static async Task<CompositeValueProvider> CreateAsync(
+            ActionContext actionContext,
+            IList<IValueProviderFactory> factories)
+        {
+            var valueProviderFactoryContext = new ValueProviderFactoryContext(actionContext);
+
             for (var i = 0; i < factories.Count; i++)
             {
                 var factory = factories[i];

@@ -4,10 +4,12 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 using Microsoft.AspNetCore.Mvc.RazorPages.Internal;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Microsoft.AspNetCore.Mvc.RazorPages.Test.Internal
@@ -336,7 +338,7 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages.Test.Internal
         {
             public TestPage()
             {
-                Binder = new MockBinder();
+                PageContext = BuildPageContext();
             }
 
             public bool SideEffects { get; private set; }
@@ -433,13 +435,27 @@ namespace Microsoft.AspNetCore.Mvc.RazorPages.Test.Internal
         {
             public EmptyPage()
             {
-                Binder = new MockBinder();
+                PageContext = BuildPageContext();
             }
 
             public override Task ExecuteAsync()
             {
                 throw new NotImplementedException();
             }
+        }
+
+        private static PageContext BuildPageContext()
+        {
+            var serviceCollection = new ServiceCollection()
+                .AddSingleton<PageArgumentBinder, MockBinder>();
+
+            return new PageContext()
+            {
+                HttpContext = new DefaultHttpContext()
+                {
+                    RequestServices = serviceCollection.BuildServiceProvider()
+                }
+            };
         }
 
         private class MockBinder : PageArgumentBinder
