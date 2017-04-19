@@ -90,8 +90,8 @@ namespace Microsoft.AspNetCore.Mvc.FunctionalTests
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var content = await response.Content.ReadAsStringAsync();
 
-            Assert.Contains("Validation: fail", content.Trim());
-            Assert.Contains("Age is too high", content.Trim());
+            Assert.Contains("Validation: fail", content);
+            Assert.Contains("The field Age must be between 0 and 99.", content);
         }
 
         [Fact]
@@ -115,6 +115,8 @@ namespace Microsoft.AspNetCore.Mvc.FunctionalTests
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var content = await response.Content.ReadAsStringAsync();
+            Assert.Contains("Updated: True", content);
+            Assert.Contains("Name = Overriden", content);
         }
 
         [Fact]

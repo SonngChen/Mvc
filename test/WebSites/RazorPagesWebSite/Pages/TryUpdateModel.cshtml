@@ -1,18 +1,20 @@
 ﻿@page "{id:int}"
 @using RazorPagesWebSite
+@using Microsoft.AspNetCore.Mvc.ModelBinding
 
 @functions
 {
-    [ModelBinder]
     public UserModel UserModel { get; set; }
 
     [FromRoute]
     public int Id { get; set; }
 
-    public async Task OnPost(UserModel user)
+    public async Task OnPost()
     {
+        var valueProvider = await CompositeValueProvider.CreateAsync(PageContext);
+        var user = new UserModel();
 
-        Updated = await this.TryUpdateModelAsync(user);
+        Updated = await TryUpdateModelAsync(user);
 
         UserModel = user;
     }
@@ -25,4 +27,4 @@
     @Html.AntiForgeryToken()    
 </form>
 Updated: @Updated
-Name = @UserModel.Name
+Name = @UserModel?.Name
